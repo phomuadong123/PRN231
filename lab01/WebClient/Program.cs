@@ -6,6 +6,7 @@ builder.Services.AddControllersWithViews()
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.AddSession();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
@@ -13,8 +14,10 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 app.UseStaticFiles();
+app.UseHttpsRedirection();
 
 app.UseSession();
 
@@ -24,6 +27,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+    pattern: "{controller=Product}/{action=Index}");
 
 app.Run();
